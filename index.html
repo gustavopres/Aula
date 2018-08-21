@@ -14,10 +14,8 @@
     <script>
       if('serviceWorker' in navigator){
         navigator.serviceWorker.register('/sw.js')
-        .then(function(registration){
-          console.log('Registered:',registration);
-        }).catch(function(error){
-          console.log('Registrarion failed:',error);
+        .then(function(){console.log('Registered:');
+        }).catch(function(){console.warn('Registrarion failed:');
         });
       }
     </script>
