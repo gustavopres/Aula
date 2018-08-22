@@ -5,7 +5,7 @@ self.addEventListener('install', function (event) {
       return cache.addAll([
         '/',
         '/index.html',
-        '/todo.css',
+        '/css/todo.css',
         '/app.js',
         '/manifest.json',
       ]);
@@ -32,7 +32,7 @@ self.addEventListener('install', function (event) {
   });
 
   caches.open('example-cache').then(function(cache) {
-    cache.add('/example-file.html');
+    cache.add('/index.html');
   });
   caches.open('example-cache').then(function(cache) {
     cache.matchAll('/images/').then(function(response) {
