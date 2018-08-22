@@ -44,11 +44,10 @@
 
 	}
 	function mostra(){
-	      for (var i = 0;i<carrinho.produtos.length; i++) {
-	         valor+="A fazer: "+lista.afazer[i].quantidade
+	      for (var i = 0;i<lista.afazer.length; i++) {
+	         valor+="A fazer: "+lista.afazer[i].value;
 	         valor+="<input type='button'  value='Excluir' onclick = 'excluir("+i+")'>";
-	         valor+="<br>";total+=lista.afazer[i].preço*carrinho.produtos[i].quantidade;
-      		}
+	        }
       		document.getElementById("lista").innerHTML=valor;
    	}
 
