@@ -28,14 +28,18 @@
         });
       }
     </script>
-    <script>	
+    <script>
+	lista = {
+	  afazer:[]		
+	};
+		
 	function insere(){
-		carrinho.produtos.push({to_do:document.getElementById("todo").value}); 
+		lista.afazer.push({to_do:document.getElementById("todo").value}); 
 		mostra();
    	}
 
 	function excluir(num){
-		carrinho.produtos.splice(num,1);
+		lista.afazer.splice(num,1);
 		mostra();
 
 	}
