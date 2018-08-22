@@ -10,7 +10,7 @@
 		<h1>To Do List</h1>
 			<form>
 			To Do: <input type="text" name="todo" id="todo"><br><br>		
-				<input type="button"  value="Adicionar" onclick = "insere()"><br><br>
+				<input type="button"  value="Enviar" onclick = "insere()"><br><br>
 			</form>
 
     	<div id="result"></div>
@@ -34,7 +34,7 @@
 	};
 		
 	function insere(){
-		lista.afazer.push({to_do:document.getElementById("todo").value}); 
+		lista.afazer.push({afazer:document.getElementById("todo").value}); 
 		mostra();
    	}
 
