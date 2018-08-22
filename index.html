@@ -22,9 +22,10 @@
 	lista = {
 	  afazeres:[{}]		
 	};
+	
 		
 	function insere(){
-		lista.afazeres.push({fazer:document.getElementById("afazer").value}); 
+		lista.afazeres.push({fazer:document.getElementById("afazer").value}); 		
 		mostra();
    	}
 
@@ -35,14 +36,15 @@
 	}
 	function mostra(){
 		valor ="";	      
-		for (var i = 0;i<lista.afazeres.length; i++) {
-	         valor+= "A fazer: "+lista.afazeres[i].fazer;
-	         valor+="<input type='button'  value='Excluir' onclick= 'excluir("+i+")'>";
-		 valor+= "<br>";
+		for (var i = 1;i<lista.afazeres.length; i++) {
+	          	valor+= "A fazer: "+lista.afazeres[i].fazer;
+	         	valor+="<input type='button'  value='Excluir' onclick= 'excluir("+i+")'>";
+		        valor+= "<br>";		 
 	        }
 
       		document.getElementById("result").innerHTML=valor;
    	}
+	
 
   </script>
 
