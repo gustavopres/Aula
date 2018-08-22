@@ -3,6 +3,7 @@
     <link rel="stylesheet" href="css/todo.css">
     <link rel="stylesheet" href="css/jquery.mobile-1.4.5.min.css" />
     <link rel="manifest" href="manifest.json">
+    <meta name="viewport" content="width=device-width, user-scalable=no">
 
   </head>
   <body>
@@ -19,9 +20,7 @@
 
     <script language="JavaScript">
 	lista = {
-	  afazeres:[
-		{fazer: "alguma coisa"}
-	  ]		
+	  afazeres:[{}]		
 	};
 		
 	function insere(){
@@ -35,11 +34,11 @@
 
 	}
 	function mostra(){
-		valor="";	      
+		valor ="";	      
 		for (var i = 0;i<lista.afazeres.length; i++) {
 	         valor+= "A fazer: "+lista.afazeres[i].fazer;
 	         valor+="<input type='button'  value='Excluir' onclick= 'excluir("+i+")'>";
-		 valor+= "<br><br>";
+		 valor+= "<br>";
 	        }
 
       		document.getElementById("result").innerHTML=valor;
