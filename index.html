@@ -19,10 +19,13 @@
 	</div>    
 
     <script language="JavaScript">
-	mostrar();
 	lista = [];
 	
 	function insere(){
+		if(JSON.parse(localStorage.getItem("afazeres"))!= null){
+			lista = JSON.parse(localStorage.getItem("afazeres"));
+		}
+
 		lista.push(document.getElementById("afazer").value); 	
 		localStorage.setItem("afazeres", JSON.stringify(lista));
 		mostra();
