@@ -19,25 +19,30 @@
 	</div>    
 
     <script language="JavaScript">
-	lista = {
-	  afazeres:[{}]		
-	};
+	lista = [];
 	
-		
+	var lista_afazer;	
+	
 	function insere(){
-		lista.afazeres.push({fazer:document.getElementById("afazer").value}); 		
+		lista.push(document.getElementById("afazer").value); 	
+		localStorage.setItem("afazeres", JSON.stringify(lista));
 		mostra();
    	}
 
 	function excluir(num){
-		lista.afazeres.splice(num,1);
+		lista.splice(num,1);
 		mostra();
 
 	}
 	function mostra(){
+		
+
+		lista = JSON.parse(localStorage.getItem("afazeres"));		
+
+
 		valor ="";	      
-		for (var i = 1;i<lista.afazeres.length; i++) {
-	          	valor+= "A fazer: "+lista.afazeres[i].fazer;
+		for (var i = 0;i<lista.length; i++) {
+	          	valor+= "A fazer: "+lista[i];
 	         	valor+="<input type='button'  value='Excluir' onclick= 'excluir("+i+")'>";
 		        valor+= "<br>";		 
 	        }
