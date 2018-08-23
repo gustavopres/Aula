@@ -6,7 +6,7 @@
     <meta name="viewport" content="width=device-width, user-scalable=no">
 
   </head>
-  <body>
+  <body onload="mostra();">
 	<div class="container">
 		<h1>To Do List</h1>
 			<form>
@@ -22,8 +22,6 @@
 	mostrar();
 	lista = [];
 	
-	var lista_afazer;	
-	
 	function insere(){
 		lista.push(document.getElementById("afazer").value); 	
 		localStorage.setItem("afazeres", JSON.stringify(lista));
@@ -37,18 +35,17 @@
 	}
 	function mostra(){
 		
+		if(JSON.parse(localStorage.getItem("afazeres"))!= null){
+			lista = JSON.parse(localStorage.getItem("afazeres"));
+			valor ="";	      
+			for (var i = 0;i<lista.length; i++) {
+	          		valor+= "A fazer: "+lista[i];
+	         		valor+="<input type='button'  value='Excluir' onclick= 'excluir("+i+")'>";
+		        	valor+= "<br>";		 
+	        	}
 
-		lista = JSON.parse(localStorage.getItem("afazeres"));		
-
-
-		valor ="";	      
-		for (var i = 0;i<lista.length; i++) {
-	          	valor+= "A fazer: "+lista[i];
-	         	valor+="<input type='button'  value='Excluir' onclick= 'excluir("+i+")'>";
-		        valor+= "<br>";		 
-	        }
-
-      		document.getElementById("result").innerHTML=valor;
+      			document.getElementById("result").innerHTML=valor;
+		}
    	}
 	
 
