@@ -32,7 +32,12 @@
    	}
 
 	function excluir(num){
+		if(JSON.parse(localStorage.getItem("afazeres"))!= null){
+			lista = JSON.parse(localStorage.getItem("afazeres"));
+		}
+
 		lista.splice(num,1);
+		localStorage.setItem("afazeres", JSON.stringify(lista));
 		mostra();
 
 	}
