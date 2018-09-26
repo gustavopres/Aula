@@ -14,7 +14,7 @@
         <div class="form-group">
           <label for="exampleInputEmail1">To do</label>
           <input class="form-control" type="text" name="todo" id="afazer"><br><br>
-  				<input type="button"  value="Enviar" onclick = "insere()"><br><br>
+  				<input type="button" class="btn btn-primary"  value="Enviar" onclick = "insere()"><br><br>
         </div>
       </form>
 
@@ -52,7 +52,7 @@
 			valor ="";
 			for (var i = 0;i<lista.length; i++) {
 	          	valor+= "A fazer: "+lista[i];
-	         		valor+="<input type='button'  value='Excluir' onclick= 'excluir("+i+")'>";
+	         		valor+="<input type='button' class='btn btn-primary'  value='Excluir' onclick= 'excluir("+i+")'>";
 		        	valor+= "<br>";
 	        	}
 
