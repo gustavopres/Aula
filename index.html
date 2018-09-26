@@ -51,7 +51,7 @@
 			lista = JSON.parse(localStorage.getItem("afazeres"));
 			valor ="";
 			for (var i = 0;i<lista.length; i++) {
-	          		valor+= "A fazer: "+lista[i];
+	          	valor+= "A fazer: "+lista[i];
 	         		valor+="<input type='button'  value='Excluir' onclick= 'excluir("+i+")'>";
 		        	valor+= "<br>";
 	        	}
