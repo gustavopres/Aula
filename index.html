@@ -187,13 +187,13 @@
     <script >
       if('serviceWorker' in navigator){
         navigator.serviceWorker.register('/sw.js')
-        .then(function(){console.log('Registered:');
-          }).catch(function(){console.warn('Registrarion failed:');
+        .then(function(){console.log('Registered');
+          }).catch(function(){console.warn('Registrarion failed');
         });
       }
     </script>
     
-    <script src="js/bootstrap"> </script>
+    <script src="js/bootstrap">
     <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyBc6myDs3eyXyC5tICHpn9IWZd7bRnIFMk&libraries=places&callback=initAutocomplete"
         async defer></script>
   </body>
