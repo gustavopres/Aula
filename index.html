@@ -27,6 +27,7 @@
 
   <body onload="mostra();">
     <div class="container">
+
     <div id="locationField">
       <input class="form-control" id="autocomplete" placeholder="Digite o Endereço."
              onFocus="geolocate()" type="text"></input>
@@ -192,7 +193,7 @@
       if('serviceWorker' in navigator){
         navigator.serviceWorker.register('/sw.js')
         .then(function(){console.log('Registered');
-          }).catch(function(){console.warn('Registrarion failed');
+          }).catch(function(){console.warn('Registrarion fail');
         });
       }
     </script>
