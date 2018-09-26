@@ -19,9 +19,10 @@
 			google.maps.events.AddListener(autocomplete, "place_changed",function(){
 				var places = autocomplete.getPlace();
 				var location = places.formatted_address;
+				document.getElementById(result).innerHTML=location;
 			});
 
-			document.getElementById(result);
+			
 		};
 
 	</script>
