@@ -8,44 +8,66 @@
 
   </head>
   <body onload="mostra();">
-
-	<script src="https://maps.googleapis.com/maps/api/js?v3.exp&libraries=places"></script>
-
-	<script type="text/javascript">
-		
-		google.maps.event.addDomListener(window, "load", intilize);
-		function intilize(){
-			var autocomplete = new google.maps.places.autocomplete(document.getElementById("Local"));
-			google.maps.events.AddListener(Autocomplete, "place_changed",function(){
-				var places = autocomplete.getPlace();
-				var location = places.formatted_address;
-				document.getElementById(result).innerHTML=location;
-			});
-
-			
-		};
-
-	</script>
-
 	<div class="container">
 		<h1>To Do List</h1>
 			<form>
-        		<div class="form-group">
-          			<label for="exampleInputEmail1">Local</label>
-          			<input class="form-control" type="text" name="todo" id="Local"><br><br>
-          			<label id="result"></label>
-  					<input type="button"  value="Enviar" onclick = "insere()"><br><br>
-        		</div>
-      		</form>
+        <div class="form-group">
+          <label for="exampleInputEmail1">To do</label>
+          <input class="form-control" type="text" name="todo" id="afazer"><br><br>
+  				<input type="button"  value="Enviar" onclick = "insere()"><br><br>
+        </div>
+      </form>
 
     	<div id="result"></div>
+
 	</div>
+
+    <script language="JavaScript">
+	lista = [];
+
+	function insere(){
+		if(JSON.parse(localStorage.getItem("afazeres"))!= null){
+			lista = JSON.parse(localStorage.getItem("afazeres"));
+		}
+
+		lista.push(document.getElementById("afazer").value);
+		localStorage.setItem("afazeres", JSON.stringify(lista));
+		mostra();
+   	}
+
+	function excluir(num){
+		if(JSON.parse(localStorage.getItem("afazeres"))!= null){
+			lista = JSON.parse(localStorage.getItem("afazeres"));
+		}
+
+		lista.splice(num,1);
+		localStorage.setItem("afazeres", JSON.stringify(lista));
+		mostra();
+
+	}
+	function mostra(){
+
+		if(JSON.parse(localStorage.getItem("afazeres"))!= null){
+			lista = JSON.parse(localStorage.getItem("afazeres"));
+			valor ="";
+			for (var i = 0;i<lista.length; i++) {
+	          	valor+= "A fazer: "+lista[i];
+	         		valor+="<input type='button'  value='Excluir' onclick= 'excluir("+i+")'>";
+		        	valor+= "<br>";
+	        	}
+
+      			document.getElementById("result").innerHTML=valor;
+		}
+   	}
+
+
+  </script>
 
 	<script >
       if('serviceWorker' in navigator){
         navigator.serviceWorker.register('/sw.js')
-        .then(function(){console.log('Registered!');
-        	}).catch(function(){console.warn('Registrarion failed!');
+        .then(function(){console.log('Registered:');
+        	}).catch(function(){console.warn('Registrarion failed:');
         });
       }
     </script>
