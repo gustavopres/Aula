@@ -5,8 +5,7 @@ self.addEventListener('install', function (event) {
       return cache.addAll([
         '/',
         '/index.html',
-        '/css/todo.css',
-        '/app.js',
+        '/css/todo.css',        
         '/manifest.json',
       ]);
     })
