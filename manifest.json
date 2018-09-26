@@ -1,10 +1,10 @@
 {
   "name": "Endereços",
   "short_name": "Endereços",
-  "theme_color": "#2196f3",
-  "background_color": "#2196f3",
+  "theme_color": "#989898",
+  "background_color": "#989a96",
   "display": "fullscreen",
-  "Scope": "/index",
+  "Scope": "/",
   "start_url": "/",
   "icons": [
     {
