@@ -154,8 +154,8 @@
     }
 
     lista.push(endereco);
-    localStorage.setItem("afazeres", JSON.stringify(lista));    
-    mostra();
+    localStorage.setItem("afazeres", JSON.stringify(lista));
+    if(endereco != "")   	mostra();    
     }
 
   function excluir(num){
