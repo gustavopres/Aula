@@ -2,6 +2,7 @@
   <head>
     <link rel="stylesheet" href="css/todo.css">
     <link rel="stylesheet" href="css/jquery.mobile-1.4.5.min.css" />
+    <link rel="stylesheet" href="css/bootstrap.css" />
     <link rel="manifest" href="manifest.json">
     <meta name="viewport" content="width=device-width, user-scalable=no">
 
@@ -10,23 +11,23 @@
 	<div class="container">
 		<h1>To Do List</h1>
 			<form>
-			To Do: <input type="text" name="todo" id="afazer"><br><br>		
+			To Do: <input class="form-control" type="text" name="todo" id="afazer"><br><br>
 				<input type="button"  value="Enviar" onclick = "insere()"><br><br>
 			</form>
 
     	<div id="result"></div>
-    
-	</div>    
+
+	</div>
 
     <script language="JavaScript">
 	lista = [];
-	
+
 	function insere(){
 		if(JSON.parse(localStorage.getItem("afazeres"))!= null){
 			lista = JSON.parse(localStorage.getItem("afazeres"));
 		}
 
-		lista.push(document.getElementById("afazer").value); 	
+		lista.push(document.getElementById("afazer").value);
 		localStorage.setItem("afazeres", JSON.stringify(lista));
 		mostra();
    	}
@@ -42,20 +43,20 @@
 
 	}
 	function mostra(){
-		
+
 		if(JSON.parse(localStorage.getItem("afazeres"))!= null){
 			lista = JSON.parse(localStorage.getItem("afazeres"));
-			valor ="";	      
+			valor ="";
 			for (var i = 0;i<lista.length; i++) {
 	          		valor+= "A fazer: "+lista[i];
 	         		valor+="<input type='button'  value='Excluir' onclick= 'excluir("+i+")'>";
-		        	valor+= "<br>";		 
+		        	valor+= "<br>";
 	        	}
 
       			document.getElementById("result").innerHTML=valor;
 		}
    	}
-	
+
 
   </script>
 
@@ -66,7 +67,8 @@
         	}).catch(function(){console.warn('Registrarion failed:');
         });
       }
-    </script>	
+    </script>
     <script src="js/jquery.mobile-1.4.5.min.js"> </script>
+    <script src="js/bootstrap.js"> </script>
   </body>
 </html>
