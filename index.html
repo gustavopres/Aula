@@ -1,202 +1,170 @@
 <!DOCTYPE html>
 <html>
-  <head>
-    <link rel="stylesheet" href="css/bootstrap.css" />
-    <link rel="manifest" href="manifest.json">
-    <title>Endereços</title>
-    <meta name="viewport" content="initial-scale=1.0, user-scalable=no">
-    <meta charset="utf-8">
-    <style>
-      /* Always set the map height explicitly to define the size of the div
-       * element that contains the map. */
-      #map {
-        height: 100%;
-      }
-      /* Optional: Makes the sample page fill the window. */
-      html, body {
-        height: 100%;
-        margin: 0;
-        padding: 0;
-      }
-    </style>      
+ 	<head>
+	    <link rel="stylesheet" href="css/bootstrap.css" />
+	    <link rel="manifest" href="manifest.json">    
+	    <meta name="viewport" content="initial-scale=1.0, user-scalable=no">
+	    <meta charset="utf-8">
+	    <title>Endereços</title>
+	</head>
 
-  </head>
+	  <body onload="mostra();">
+	    <div class="container">
 
-  <body onload="mostra();">
-    <div class="container">
+		    <div id="locationField">
+		     	<input class="form-control" id="autocomplete" placeholder="Digite o Endereço."
+		            onFocus="geolocate()" type="text"></input>
+		    </div>
+		    <form >
+		    	<fieldset>
+		      		<legend>
+			      		<div class="form-group">
+			      
+			        		<label class="label label-default">Endereço</label>
+			        		<div class="row">
+			          			<div class="col">
+			            			<label class="label label-default">Rua</label>
+			            			<input class="form-control" id="route" disabled="true">
+			          			</div>
+			          			<div class="col">
+			           				<label class="label label-default">Numero</label>
+			            			<input class="form-control col-md-2" id="street_number" disabled="true">       
+			          			</div>
+			        		</div>
+			      		</div>
 
-    <div id="locationField">
-      <input class="form-control" id="autocomplete" placeholder="Digite o Endereço."
-             onFocus="geolocate()" type="text"></input>
-    </div>
-    <form >
-      <fieldset>
-        <legend>
-      <div class="form-group">
-      
-        <label class="label label-default">Endereço</label>
-        <div class="row">
-          <div class="col">
-            <label class="label label-default">Rua</label>
-            <input class="form-control" id="route" disabled="true">
-          </div>
-          <div class="col">
-           <label class="label label-default">Numero</label>
-            <input class="form-control col-md-2" id="street_number" disabled="true">       
-          </div>
-        </div>
-      </div>
+			        	<label class="label label-default">Cidade</label>
+			        	<input class="form-control" id="locality"  disabled="true">
+			      	
+			        	<label class="label label-default">Estado</label>
+			        	<input class="form-control"  id="administrative_area_level_1" disabled="true">
 
-        <label class="label label-default">Cidade</label>
-        <input class="form-control" id="locality"  disabled="true">
-      
-        <label class="label label-default">Estado</label>
-        <input class="form-control"  id="administrative_area_level_1" disabled="true">
+			        	<label class="label label-default">CEP</label>
+			        	<input class="form-control" id="postal_code" disabled="true">
 
-        <label class="label label-default">CEP</label>
-        <input class="form-control" id="postal_code" disabled="true">
+			        	<label class="label label-default">Pais</label>
+			        	<input class="form-control"  id="country" disabled="true">      
 
-        <label class="label label-default">Pais</label>
-        <input class="form-control"  id="country" disabled="true">
-      
+			      		<input type="button" class="btn btn-outline-primary"  value="Enviar" onclick = "insere()">
+		      		</legend>
+		    	</fieldset>
+		    </form>
+	    	<div class="form-group" id="result"></div>
+	    </div>
 
-      <input type="button" class="btn btn-outline-primary"  value="Enviar" onclick = "insere()">
-      </legend>
-      </fieldset>
-    </form>
+	    <script>      
 
-    <div class="form-group" id="result"></div>
-    </div>
+	      var placeSearch, autocomplete, endereco ="";
+	      var componentForm = {
+	        street_number: 'short_name',
+	        route: 'long_name',
+	        locality: 'long_name',
+	        administrative_area_level_1: 'short_name',
+	        country: 'long_name',
+	        postal_code: 'short_name'
+	      };
 
-    <script src="https://maps.googleapis.com/maps/api/js?&key=AIzaSyDgDLxpp2PXx6njVMIpYiCwVSs0GZwLKfw&libraries=places&callback=initAutocomplete" async defer></script>
-  </body>
+	      function initAutocomplete() {        
+	        autocomplete = new google.maps.places.Autocomplete((document.getElementById('autocomplete')),
+	            {types: ['geocode']});
 
-    <script>
-      // This example displays an address form, using the autocomplete feature
-      // of the Google Places API to help users fill in the information.
+	       	autocomplete.addListener('place_changed', fillInAddress);
+	      }
 
-      // This example requires the Places library. Include the libraries=places
-      // parameter when you first load the API. For example:
-      // <script src="https://maps.googleapis.com/maps/api/js?key=YOUR_API_KEY&libraries=places">
+	      function fillInAddress() {
+	        var place = autocomplete.getPlace();
 
-      var placeSearch, autocomplete, endereco ="";
-      var componentForm = {
-        street_number: 'short_name',
-        route: 'long_name',
-        locality: 'long_name',
-        administrative_area_level_1: 'short_name',
-        country: 'long_name',
-        postal_code: 'short_name'
-      };
+	        for (var component in componentForm) {
+	          document.getElementById(component).value = '';
+	          document.getElementById(component).disabled = false;
+	        }
 
-      function initAutocomplete() {
-        // Create the autocomplete object, restricting the search to geographical
-        // location types.
-        autocomplete = new google.maps.places.Autocomplete(
-            /** @type {!HTMLInputElement} */(document.getElementById('autocomplete')),
-            {types: ['geocode']});
+	        endereco="";
+	        for (var i = 0; i < place.address_components.length; i++) {
+	          var addressType = place.address_components[i].types[0];
+	          if (componentForm[addressType]) {
+	            var val = place.address_components[i][componentForm[addressType]];
+	            document.getElementById(addressType).value = val;
+	            endereco += (document.getElementById(addressType).value = val) + "|";
+	          }
+	        }
+	      }
 
-        // When the user selects an address from the dropdown, populate the address
-        // fields in the form.
-        autocomplete.addListener('place_changed', fillInAddress);
-      }
-
-      function fillInAddress() {
-        // Get the place details from the autocomplete object.
-        var place = autocomplete.getPlace();
-
-        for (var component in componentForm) {
-          document.getElementById(component).value = '';
-          document.getElementById(component).disabled = false;
-        }
-
-        // Get each component of the address from the place details
-        // and fill the corresponding field on the form.
-        endereco="";
-        for (var i = 0; i < place.address_components.length; i++) {
-          var addressType = place.address_components[i].types[0];
-          if (componentForm[addressType]) {
-            var val = place.address_components[i][componentForm[addressType]];
-            document.getElementById(addressType).value = val;
-            endereco += (document.getElementById(addressType).value = val) + "|";
-          }
-        }
-      }
-
-      // Bias the autocomplete object to the user's geographical location,
-      // as supplied by the browser's 'navigator.geolocation' object.
-      function geolocate() {
-        if (navigator.geolocation) {
-          navigator.geolocation.getCurrentPosition(function(position) {
-            var geolocation = {
-              lat: position.coords.latitude,
-              lng: position.coords.longitude
-            };
-            var circle = new google.maps.Circle({
-              center: geolocation,
-              radius: position.coords.accuracy
-            });
-            autocomplete.setBounds(circle.getBounds());
-          });
-        }
-      }
+	      function geolocate() {
+	        if (navigator.geolocation) {
+	          navigator.geolocation.getCurrentPosition(function(position) {
+	            var geolocation = {
+	              lat: position.coords.latitude,
+	              lng: position.coords.longitude
+	            };
+	            var circle = new google.maps.Circle({
+	              center: geolocation,
+	              radius: position.coords.accuracy
+	            });
+	            autocomplete.setBounds(circle.getBounds());
+	          });
+	        }
+	      }
 
 
-      lista = [];
+	      lista = [];
 
-  function insere(){
-    if(JSON.parse(localStorage.getItem("afazeres"))!= null){
-      lista = JSON.parse(localStorage.getItem("afazeres"));
-    }
+	  		function insere(){
+	    		if(JSON.parse(localStorage.getItem("afazeres"))!= null){
+	      			lista = JSON.parse(localStorage.getItem("afazeres"));
+	    		}
 
-    lista.push(endereco);
-    localStorage.setItem("afazeres", JSON.stringify(lista));
-    if(endereco != "")
-    	mostra();    
-    }
+	    		lista.push(endereco);
+	    		localStorage.setItem("afazeres", JSON.stringify(lista));
+	    		if(endereco != "")	mostra();    
+	    	}
 
-  function excluir(num){
-    if(JSON.parse(localStorage.getItem("afazeres"))!= null){
-      lista = JSON.parse(localStorage.getItem("afazeres"));
-    }
+		  	function excluir(num){
+		    	if(JSON.parse(localStorage.getItem("afazeres"))!= null){
+		      		lista = JSON.parse(localStorage.getItem("afazeres"));
+		    	}
 
-    lista.splice(num,1);
-    localStorage.setItem("afazeres", JSON.stringify(lista));
-    mostra();
+		    	lista.splice(num,1);
+		    	localStorage.setItem("afazeres", JSON.stringify(lista));
+		    	mostra();
 
-  }
-  function mostra(){
+		  	}
 
-    if(JSON.parse(localStorage.getItem("afazeres"))!= null){
-      lista = JSON.parse(localStorage.getItem("afazeres"));
-      valor ="";
-      for (var i = 0;i<lista.length; i++) {
-              var res = lista[i].split("|");
-              valor+= "<fieldset><legend>"+res[1]+"</legend>"
-              valor+= "<label class='label label-default'>Rua</label> <input class='form-control' disabled='true' value='"+res[1]+"'>";
-              valor+= "<label class='label label-default'>Numero</label> <input class='form-control' disabled='true' value='"+res[0]+"'>";
-              valor+= "<label class='label label-default'>CEP</label> <input class='form-control' disabled='true' value='"+res[4]+"'>";
-              valor+="<input type='button' class='btn btn-outline-danger'  value='Excluir' onclick= 'excluir("+i+")'>";
-              valor+="<a href='http://maps.google.com/maps/api/geocode/json?address="+res[4]+"sensor=false'>MAPA</a>";
-              valor+= "</fieldset>";
-              valor+= "<br>";
-            }
+		  	function mostra(){
+		    	if(JSON.parse(localStorage.getItem("afazeres"))!= null){
+		      		lista = JSON.parse(localStorage.getItem("afazeres"));
+		      		valor ="";
+		      		for (var i = 0;i<lista.length; i++) {
+		            	var res = lista[i].split("|");
+		              	valor+= "<fieldset><legend>"+res[1]+"</legend>"
+		              	valor+= "<label class='label label-default'>Rua</label> <input class='form-control' disabled='true' value='"+res[1]+"'>";
+		              	valor+= "<label class='label label-default'>Numero</label> <input class='form-control' disabled='true' value='"+res[0]+"'>";
+		              	valor+= "<label class='label label-default'>CEP</label> <input class='form-control' disabled='true' value='"+res[4]+"'>";
+		              	valor+="<input type='button' class='btn btn-outline-danger'  value='Excluir' onclick= 'excluir("+i+")'>";
+		              	valor+="<a href='http://maps.google.com/maps/api/geocode/json?address="+res[4]+"sensor=false'>MAPA</a>";
+		              	valor+= "</fieldset>";
+		              	valor+= "<br>";
+		            }
 
-            document.getElementById("result").innerHTML=valor;
-      }
-    }
+		            document.getElementById("result").innerHTML=valor;
+		      	}
+	    	}
 
+	    </script>
 
-    </script>
-    <script >
-      if('serviceWorker' in navigator){
-        navigator.serviceWorker.register('/sw.js')
-        .then(function(){console.log('Registered');
-          }).catch(function(){console.warn('Registrarion fail');
-        });
-      }
-    </script>
-    
-    <script src="js/bootstrap.js">    
-  </body>
+	    <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyBmhSp2GyjKJ4FOlwf6BTOtv6s3mnpt_Is&libraries=places&callback=initAutocomplete"
+	        async defer>
+	        	
+	     </script>
+	    <script >
+	      if('serviceWorker' in navigator){
+	        navigator.serviceWorker.register('/sw.js')
+	        .then(function(){console.log('Registered');
+	          }).catch(function(){console.warn('Registrarion fail');
+	        });
+	      }
+	    </script>
+	    
+	    <script src="js/bootstrap.js">    
+  	</body>
 </html>
